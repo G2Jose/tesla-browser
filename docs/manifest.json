@@ -1,6 +1,6 @@
 {
-  "short_name": "Tesla Browser",
-  "name": "Tesla Browser",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
     {
       "src": "favicon.ico",
