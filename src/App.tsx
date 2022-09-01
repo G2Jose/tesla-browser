@@ -14,6 +14,7 @@ import netflix from './netflix.png'
 import youtube from './youtube.webp'
 import tikTok from './tikTok.svg'
 import google from './google.png'
+import xbox from './xbox.png'
 import './App.css'
 import useLongPress from './useLongPress'
 
@@ -209,6 +210,11 @@ const SITE_CONFIG: TSite[] = [
     name: 'Google',
     image: google,
     url: 'https://google.com',
+  },
+  {
+    name: 'Xbox Cloud',
+    image: xbox,
+    url: 'https://www.xbox.com/play/',
   },
 ].sort((a, b) => (a.name < b.name ? -1 : 1))
 
