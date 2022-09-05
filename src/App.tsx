@@ -218,6 +218,46 @@ const SITE_CONFIG: TSite[] = [
   },
 ].sort((a, b) => (a.name < b.name ? -1 : 1))
 
+function Intro() {
+  const shouldNotShowAgain: boolean = JSON.parse(
+    localStorage.getItem('dontShowHelpAgain') || 'false'
+  )
+
+  const [showHelp, setShowHelp] = useState(!shouldNotShowAgain)
+
+  if (!showHelp) return null
+
+  return (
+    <div
+      style={{
+        borderColor: 'grey',
+        borderWidth: 'thin',
+        borderStyle: 'solid',
+        paddingRight: 20,
+        paddingLeft: 20,
+        paddingBottom: 12,
+        margin: 6,
+      }}
+    >
+      <p>Click any item below to open in fullscreen on your Tesla Browser.</p>
+      <p>Press the '+' icon to save a new site.</p>
+      <p>Long press to delete an item.</p>
+      <button style={{ padding: 8 }} onClick={() => setShowHelp(false)}>
+        Got it
+      </button>
+      <button
+        style={{ marginLeft: 8, padding: 8 }}
+        onClick={() => {
+          setShowHelp(false)
+          localStorage.setItem('dontShowHelpAgain', 'true')
+        }}
+      >
+        Don't show again
+      </button>
+    </div>
+  )
+}
+
 function App() {
   const [sites, setSites] = useState<TSite[]>([])
 
@@ -231,7 +271,7 @@ function App() {
       SITE_CONFIG.map(x => addSite(x))
       refreshSites()
     }
-  }, [])
+  }, [refreshSites])
 
   useEffect(refreshSites, [refreshSites])
 
@@ -287,6 +327,7 @@ function App() {
           onPressCancel={() => onPressCancel()}
         />
       )}
+      <Intro />
       <div
         style={{
           flexDirection: 'row',
