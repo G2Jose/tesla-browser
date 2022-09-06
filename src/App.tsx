@@ -37,7 +37,7 @@ function Site({
 }: TSite & { onRemove: () => void }) {
   const { handlers } = useLongPress(onRemove, 500)
 
-  if (!Boolean(navigator.share)) {
+  if (Boolean(navigator.share)) {
     return (
       <div
         style={style}
