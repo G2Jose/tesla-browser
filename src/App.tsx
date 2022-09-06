@@ -48,7 +48,7 @@ function Site({
 
           if (shareEducationSeenCount <= 1) {
             alert(
-              `Choose the Tesla app in the resulting dialog. Note that you can only play fullscreen videos when parked.`
+              `Choose the Tesla app in the resulting dialog. Note that you can open websites in fullscreen only when parked.`
             )
             localStorage.setItem(
               'share-education',
