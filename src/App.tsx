@@ -283,6 +283,7 @@ function Intro({ onPressGotIt }: { onPressGotIt: () => void }) {
         smartphone, select the Tesla app on the sharesheet that opens.
       </p>
       <p>Press the '+' icon to save a new site.</p>
+      {!isOnTesla && <p>Long press to delete an item.</p>}
       <p>
         Got feedback? I'd love to hear it at{' '}
         <a href="mailto:teams08.taproom@icloud.com?subject=Fullscreen Tesla Feedback">
@@ -290,7 +291,6 @@ function Intro({ onPressGotIt }: { onPressGotIt: () => void }) {
         </a>
         !
       </p>
-      {!isOnTesla && <p>Long press to delete an item.</p>}
       <button style={{ padding: 8 }} onClick={onPressGotIt}>
         Got it
       </button>
@@ -373,7 +373,7 @@ function App() {
       {showHelp && <Intro onPressGotIt={() => setShowHelp(false)} />}
       {!showHelp && (
         <button style={{ padding: 8 }} onClick={() => setShowHelp(true)}>
-          Help
+          Help &amp; Feedback
         </button>
       )}
       <div
