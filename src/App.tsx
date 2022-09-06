@@ -17,7 +17,7 @@ import google from './google.png'
 import xbox from './xbox.png'
 import './App.css'
 import useLongPress from './useLongPress'
-import { isMobileDevice } from './utils'
+import { getIsMobileDevice, getIsTeslaBrowser } from './utils'
 
 type TSite = {
   name: string
@@ -42,9 +42,20 @@ function Site({
       <div
         style={style}
         onClick={() => {
-          alert(
-            `Choose the Tesla app in the resulting dialog. Note that you can only play fullscreen videos when you're parked.`
+          const shareEducationSeenCount = JSON.parse(
+            localStorage.getItem('share-education') || '0'
           )
+
+          if (shareEducationSeenCount <= 1) {
+            alert(
+              `Choose the Tesla app in the resulting dialog. Note that you can only play fullscreen videos when parked.`
+            )
+            localStorage.setItem(
+              'share-education',
+              `${shareEducationSeenCount + 1}`
+            )
+          }
+
           navigator.share({ url: `https://www.youtube.com/redirect?q=${url}` })
         }}
       >
@@ -253,6 +264,10 @@ function Intro() {
 
   if (!showHelp) return null
 
+  const isOnMobile = getIsMobileDevice()
+
+  const isOnTesla = getIsTeslaBrowser()
+
   return (
     <div
       style={{
@@ -265,9 +280,16 @@ function Intro() {
         margin: 6,
       }}
     >
-      <p>Click any item below to open in fullscreen on your Tesla Browser.</p>
+      {!isOnTesla && !isOnMobile && (
+        <p>Open this site on your smartphone or Tesla's browser.</p>
+      )}
+      {!isOnTesla && isOnMobile && <p>Open this site on your Tesla Browser.</p>}
+      <p>
+        Click any item below to open in fullscreen. If using this from your
+        smartphone, select the Tesla app on the sharesheet that opens.
+      </p>
       <p>Press the '+' icon to save a new site.</p>
-      <p>Long press to delete an item.</p>
+      {!isOnTesla && <p>Long press to delete an item.</p>}
       <button style={{ padding: 8 }} onClick={() => setShowHelp(false)}>
         Got it
       </button>
