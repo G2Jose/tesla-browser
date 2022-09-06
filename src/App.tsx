@@ -343,7 +343,7 @@ function App() {
 
   return (
     <div className="App" style={{ margin: '20px' }}>
-      <p>{window.innerWidth}</p>
+      {/* <p>{window.innerWidth}</p> */}
       {isAdding && (
         <AddItem
           onPressAdd={() => onPressAdd(name, url)}
