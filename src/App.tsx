@@ -257,15 +257,7 @@ const SITE_CONFIG: TSite[] = [
   },
 ].sort((a, b) => (a.name < b.name ? -1 : 1))
 
-function Intro() {
-  const shouldNotShowAgain: boolean = JSON.parse(
-    localStorage.getItem('dontShowHelpAgain') || 'false'
-  )
-
-  const [showHelp, setShowHelp] = useState(!shouldNotShowAgain)
-
-  if (!showHelp) return null
-
+function Intro({ onPressGotIt }: { onPressGotIt: () => void }) {
   const isOnMobile = getIsMobileDevice()
 
   const isOnTesla = getIsTeslaBrowser()
@@ -292,17 +284,8 @@ function Intro() {
       </p>
       <p>Press the '+' icon to save a new site.</p>
       {!isOnTesla && <p>Long press to delete an item.</p>}
-      <button style={{ padding: 8 }} onClick={() => setShowHelp(false)}>
+      <button style={{ padding: 8 }} onClick={onPressGotIt}>
         Got it
-      </button>
-      <button
-        style={{ marginLeft: 8, padding: 8 }}
-        onClick={() => {
-          setShowHelp(false)
-          localStorage.setItem('dontShowHelpAgain', 'true')
-        }}
-      >
-        Don't show again
       </button>
     </div>
   )
@@ -365,6 +348,8 @@ function App() {
     [refreshSites]
   )
 
+  const [showHelp, setShowHelp] = useState(false)
+
   return (
     <div className="App" style={{ margin: '20px' }}>
       {/* <p>{window.innerWidth}</p> */}
@@ -378,7 +363,12 @@ function App() {
           onPressCancel={() => onPressCancel()}
         />
       )}
-      <Intro />
+      {showHelp && <Intro onPressGotIt={() => setShowHelp(false)} />}
+      {!showHelp && (
+        <button style={{ padding: 8 }} onClick={() => setShowHelp(true)}>
+          Help
+        </button>
+      )}
       <div
         style={{
           flexDirection: 'row',
