@@ -40,6 +40,7 @@ function Site({
   if (Boolean(navigator.share)) {
     return (
       <div
+        id="open-sharesheet"
         style={style}
         onClick={() => {
           const shareEducationSeenCount = JSON.parse(
@@ -78,6 +79,7 @@ function Site({
       href={`https://www.youtube.com/redirect?q=${url}`}
       style={{ textAlign: 'center' }}
       {...handlers}
+      id="open-website"
     >
       <div style={style}>
         <img
