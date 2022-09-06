@@ -285,7 +285,8 @@ function Intro({ onPressGotIt }: { onPressGotIt: () => void }) {
       <p>Press the '+' icon to save a new site.</p>
       {!isOnTesla && <p>Long press to delete an item.</p>}
       <p>
-        Got feedback? I'd love to hear it at{' '}
+        Running into issues, have feature requests or have other feedback? I'd
+        love to hear it at{' '}
         <a href="mailto:teams08.taproom@icloud.com?subject=Fullscreen Tesla Feedback">
           teams08.taproom@icloud.com
         </a>
