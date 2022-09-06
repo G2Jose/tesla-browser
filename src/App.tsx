@@ -285,7 +285,7 @@ function Intro({ onPressGotIt }: { onPressGotIt: () => void }) {
       <p>Press the '+' icon to save a new site.</p>
       <p>
         Got feedback? I'd love to hear it at{' '}
-        <a href="mailto:teams08.taproom@icloud.com">
+        <a href="mailto:teams08.taproom@icloud.com?subject=Fullscreen Tesla Feedback">
           teams08.taproom@icloud.com
         </a>
         !
