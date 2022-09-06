@@ -283,6 +283,13 @@ function Intro({ onPressGotIt }: { onPressGotIt: () => void }) {
         smartphone, select the Tesla app on the sharesheet that opens.
       </p>
       <p>Press the '+' icon to save a new site.</p>
+      <p>
+        Got feedback? I'd love to hear it at{' '}
+        <a href="mailto:teams08.taproom@icloud.com">
+          teams08.taproom@icloud.com
+        </a>
+        !
+      </p>
       {!isOnTesla && <p>Long press to delete an item.</p>}
       <button style={{ padding: 8 }} onClick={onPressGotIt}>
         Got it
