@@ -17,6 +17,7 @@ import google from './google.png'
 import xbox from './xbox.png'
 import './App.css'
 import useLongPress from './useLongPress'
+import { isMobileDevice } from './utils'
 
 type TSite = {
   name: string
@@ -25,7 +26,7 @@ type TSite = {
   style?: React.CSSProperties
 }
 
-const TILE_SIZE = 400
+const TILE_SIZE = window.innerWidth <= 500 ? window.innerWidth / 2.5 : 400
 
 function Site({
   name,
@@ -35,6 +36,31 @@ function Site({
   onRemove,
 }: TSite & { onRemove: () => void }) {
   const { handlers } = useLongPress(onRemove, 500)
+
+  if (!Boolean(navigator.share)) {
+    return (
+      <div
+        style={style}
+        onClick={() => {
+          alert(
+            `Choose the Tesla app in the resulting dialog. Note that you can only play fullscreen videos when you're parked.`
+          )
+          navigator.share({ url: `https://www.youtube.com/redirect?q=${url}` })
+        }}
+      >
+        <img
+          src={image}
+          alt={name}
+          style={{
+            width: TILE_SIZE,
+            height: TILE_SIZE,
+            objectFit: 'cover',
+          }}
+        />
+        <p style={{ textAlign: 'center' }}>{name}</p>
+      </div>
+    )
+  }
 
   return (
     <a
@@ -317,6 +343,7 @@ function App() {
 
   return (
     <div className="App" style={{ margin: '20px' }}>
+      <p>{window.innerWidth}</p>
       {isAdding && (
         <AddItem
           onPressAdd={() => onPressAdd(name, url)}
