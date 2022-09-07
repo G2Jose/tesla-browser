@@ -4,7 +4,6 @@ import React, {
   useEffect,
   useState,
 } from 'react'
-import logo from './logo.svg'
 import prime from './prime.png'
 import appleTv from './appleTv.png'
 import disneyPlus from './disneyPlus.png'
@@ -37,42 +36,42 @@ function Site({
 }: TSite & { onRemove: () => void }) {
   const { handlers } = useLongPress(onRemove, 500)
 
-  if (Boolean(navigator.share)) {
-    return (
-      <div
-        id="open-sharesheet"
-        style={style}
-        onClick={() => {
-          const shareEducationSeenCount = JSON.parse(
-            localStorage.getItem('share-education') || '0'
-          )
+  // if (Boolean(navigator.share)) {
+  //   return (
+  //     <div
+  //       id="open-sharesheet"
+  //       style={style}
+  //       onClick={() => {
+  //         const shareEducationSeenCount = JSON.parse(
+  //           localStorage.getItem('share-education') || '0'
+  //         )
 
-          if (shareEducationSeenCount <= 1) {
-            alert(
-              `Choose the Tesla app in the resulting dialog. Note that you can open websites in fullscreen only when parked.`
-            )
-            localStorage.setItem(
-              'share-education',
-              `${shareEducationSeenCount + 1}`
-            )
-          }
+  //         if (shareEducationSeenCount <= 1) {
+  //           alert(
+  //             `Choose the Tesla app in the resulting dialog. Note that you can open websites in fullscreen only when parked.`
+  //           )
+  //           localStorage.setItem(
+  //             'share-education',
+  //             `${shareEducationSeenCount + 1}`
+  //           )
+  //         }
 
-          navigator.share({ url: `https://www.youtube.com/redirect?q=${url}` })
-        }}
-      >
-        <img
-          src={image}
-          alt={name}
-          style={{
-            width: TILE_SIZE,
-            height: TILE_SIZE,
-            objectFit: 'cover',
-          }}
-        />
-        <p style={{ textAlign: 'center' }}>{name}</p>
-      </div>
-    )
-  }
+  //         navigator.share({ url: `https://www.youtube.com/redirect?q=${url}` })
+  //       }}
+  //     >
+  //       <img
+  //         src={image}
+  //         alt={name}
+  //         style={{
+  //           width: TILE_SIZE,
+  //           height: TILE_SIZE,
+  //           objectFit: 'cover',
+  //         }}
+  //       />
+  //       <p style={{ textAlign: 'center' }}>{name}</p>
+  //     </div>
+  //   )
+  // }
 
   return (
     <a
@@ -274,16 +273,17 @@ function Intro({ onPressGotIt }: { onPressGotIt: () => void }) {
         margin: 6,
       }}
     >
-      {!isOnTesla && !isOnMobile && (
+      {/* {!isOnTesla && !isOnMobile && (
         <p>Open this site on your smartphone or Tesla's browser.</p>
-      )}
-      {!isOnTesla && isOnMobile && <p>Open this site on your Tesla Browser.</p>}
+      )} */}
+      {/* {!isOnTesla && isOnMobile && <p>Open this site on your Tesla Browser.</p>} */}
       <p>
-        Click any item below to open in fullscreen. If using this from your
-        smartphone, select the Tesla app on the sharesheet that opens.
+        Click any item below to open in fullscreen.
+        {/* If using this from your
+        smartphone, select the Tesla app on the sharesheet that opens. */}
       </p>
       <p>Press the '+' icon to save a new site.</p>
-      {!isOnTesla && <p>Long press to delete an item.</p>}
+      {/* {!isOnTesla && <p>Long press to delete an item.</p>} */}
       <p>
         Running into issues, have feature requests or have other feedback? I'd
         love to hear it at{' '}
