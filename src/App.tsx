@@ -14,10 +14,11 @@ import youtube from './youtube.webp'
 import tikTok from './tikTok.svg'
 import google from './google.png'
 import xbox from './xbox.png'
+import plex from './plex.png'
 import './App.css'
 import useLongPress from './useLongPress'
 import { getIsMobileDevice, getIsTeslaBrowser } from './utils'
-
+import _ from 'lodash'
 type TSite = {
   name: string
   url: string
@@ -230,7 +231,7 @@ function removeSite({ name, url }: Omit<TSite, 'image'>) {
   localStorage.setItem('sites', JSON.stringify(updatedItems))
 }
 
-function getStoredSites() {
+function getStoredSites(): TSite[] {
   const currentSitesString = localStorage.getItem('sites')
   return currentSitesString ? JSON.parse(currentSitesString) : []
 }
@@ -253,6 +254,11 @@ const SITE_CONFIG: TSite[] = [
     name: 'Xbox Cloud',
     image: xbox,
     url: 'https://www.xbox.com/play/',
+  },
+  {
+    name: 'Plex',
+    image: plex,
+    url: 'https://app.plex.tv',
   },
 ].sort((a, b) => (a.name < b.name ? -1 : 1))
 
@@ -303,7 +309,7 @@ function App() {
   const [sites, setSites] = useState<TSite[]>([])
 
   const refreshSites = useCallback(() => {
-    setSites([...getStoredSites()])
+    setSites(_.uniqBy([...getStoredSites(), ...SITE_CONFIG], x => x.url))
   }, [])
 
   useEffect(() => {
