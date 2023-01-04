@@ -293,7 +293,7 @@ function Intro({ onPressGotIt }: { onPressGotIt: () => void }) {
       <p>
         Running into issues, have feature requests or have other feedback? I'd
         love to hear it at{' '}
-        <a href="mailto:teams08.taproom@icloud.com?subject=Fullscreen Tesla Feedback">
+        <a href="mailto:support@fullscreentesla.com?subject=Fullscreen Tesla Feedback">
           teams08.taproom@icloud.com
         </a>
         !
