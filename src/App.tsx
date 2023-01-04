@@ -19,6 +19,10 @@ import './App.css'
 import useLongPress from './useLongPress'
 import { getIsMobileDevice, getIsTeslaBrowser } from './utils'
 import _ from 'lodash'
+
+import * as amplitude from '@amplitude/analytics-browser'
+amplitude.init('3b4557c81bc05195a91404b05ab97994')
+
 type TSite = {
   name: string
   url: string
@@ -37,48 +41,16 @@ function Site({
 }: TSite & { onRemove: () => void }) {
   const { handlers } = useLongPress(onRemove, 500)
 
-  // if (Boolean(navigator.share)) {
-  //   return (
-  //     <div
-  //       id="open-sharesheet"
-  //       style={style}
-  //       onClick={() => {
-  //         const shareEducationSeenCount = JSON.parse(
-  //           localStorage.getItem('share-education') || '0'
-  //         )
-
-  //         if (shareEducationSeenCount <= 1) {
-  //           alert(
-  //             `Choose the Tesla app in the resulting dialog. Note that you can open websites in fullscreen only when parked.`
-  //           )
-  //           localStorage.setItem(
-  //             'share-education',
-  //             `${shareEducationSeenCount + 1}`
-  //           )
-  //         }
-
-  //         navigator.share({ url: `https://www.youtube.com/redirect?q=${url}` })
-  //       }}
-  //     >
-  //       <img
-  //         src={image}
-  //         alt={name}
-  //         style={{
-  //           width: TILE_SIZE,
-  //           height: TILE_SIZE,
-  //           objectFit: 'cover',
-  //         }}
-  //       />
-  //       <p style={{ textAlign: 'center' }}>{name}</p>
-  //     </div>
-  //   )
-  // }
-
   return (
     <a
       href={`https://www.youtube.com/redirect?q=${url}`}
       style={{ textAlign: 'center' }}
       {...handlers}
+      onClick={e => {
+        e.preventDefault()
+        amplitude.track('site_opened', { name, url })
+        window.open(`https://www.youtube.com/redirect?q=${url}`, '_self')
+      }}
       id="open-website"
     >
       <div style={style}>
@@ -214,6 +186,7 @@ function AddItem({
 }
 
 function addSite({ name, url, image }: TSite) {
+  amplitude.track('site_added', { name, url })
   const currentSitesString = localStorage.getItem('sites')
   const currentItems = currentSitesString ? JSON.parse(currentSitesString) : []
   const updatedItems = [...currentItems, { name, url, image }]
@@ -221,6 +194,7 @@ function addSite({ name, url, image }: TSite) {
 }
 
 function removeSite({ name, url }: Omit<TSite, 'image'>) {
+  amplitude.track('site_removed', { name, url })
   const currentSitesString = localStorage.getItem('sites')
   const currentItems: TSite[] = currentSitesString
     ? JSON.parse(currentSitesString)
@@ -336,8 +310,6 @@ function App() {
   const onPressAdd = useCallback(
     (name?: string, url?: string) => {
       setIsAdding(false)
-
-      console.log({ url, name })
 
       if (name && url) {
         const imageUrl = `https://logo.clearbit.com/${url}?size=800`
