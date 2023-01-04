@@ -186,7 +186,6 @@ function AddItem({
 }
 
 function addSite({ name, url, image }: TSite) {
-  amplitude.track('site_added', { name, url })
   const currentSitesString = localStorage.getItem('sites')
   const currentItems = currentSitesString ? JSON.parse(currentSitesString) : []
   const updatedItems = [...currentItems, { name, url, image }]
@@ -314,6 +313,7 @@ function App() {
       if (name && url) {
         const imageUrl = `https://logo.clearbit.com/${url}?size=800`
         addSite({ name, url, image: imageUrl })
+        amplitude.track('site_added', { name, url })
         setName(undefined)
         setUrl(undefined)
         refreshSites()
